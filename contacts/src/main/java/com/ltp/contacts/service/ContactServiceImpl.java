@@ -1,5 +1,6 @@
 package com.ltp.contacts.service;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
     
 
+    // Stream the length of Array then find the contact based on the id
     private int findIndexById(String id) {
         return IntStream.range(0, contactRepository.getContacts().size())
             .filter(index -> contactRepository.getContacts().get(index).getId().equals(id))
@@ -25,9 +27,19 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public List<Contact> getAllContacts() {
+        return contactRepository.getContacts();
+    }
+
+    @Override
     public void saveContact(Contact contact) {
         contactRepository.saveContact(contact);
     } 
+
+    @Override
+    public void updateContact(String id, Contact contact) {
+        contactRepository.updateContact(this.findIndexById(id), contact);
+    }
 
     @Override
     public Contact getContactById(String id) {
