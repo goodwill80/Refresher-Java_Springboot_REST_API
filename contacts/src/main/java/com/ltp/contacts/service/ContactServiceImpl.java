@@ -42,6 +42,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public void deleteContact(String id) {
+        contactRepository.deleteContact(this.findIndexById(id));
+    }
+
+    @Override
     public Contact getContactById(String id) {
         return contactRepository.getContact(String.valueOf(findIndexById(id)));
     }
